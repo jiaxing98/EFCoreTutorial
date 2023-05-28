@@ -5,3 +5,4 @@
 
 ## *Razor Pages with EF Core in ASP.NET Core - CRUD*  
 ### https://learn.microsoft.com/en-us/aspnet/core/data/ef-rp/crud?view=aspnetcore-7.0  
+1. TryUpdateModelAsync
