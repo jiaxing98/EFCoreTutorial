@@ -32,7 +32,7 @@ namespace EFCoreTutorial.Pages.Students
 				return NotFound();
 			}
 
-			Student = await _context.Students
+			Student = await _context.People.OfType<Student>()
 				.AsNoTracking()
 				.FirstOrDefaultAsync(m => m.ID == id);
 
@@ -56,7 +56,8 @@ namespace EFCoreTutorial.Pages.Students
 				return NotFound();
 			}
 
-			var student = await _context.Students.FindAsync(id);
+			var student = await _context.People.OfType<Student>()
+				.SingleOrDefaultAsync(x => x.ID == id);
 
 			if (student == null)
 			{
@@ -65,7 +66,7 @@ namespace EFCoreTutorial.Pages.Students
 
 			try
 			{
-				_context.Students.Remove(student);
+				_context.People.Remove(student);
 				await _context.SaveChangesAsync();
 				return RedirectToPage("./Index");
 			}

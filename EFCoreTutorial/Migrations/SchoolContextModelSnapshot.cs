@@ -22,6 +22,8 @@ namespace EFCoreTutorial.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.HasSequence("PersonSequence");
+
             modelBuilder.Entity("CourseInstructor", b =>
                 {
                     b.Property<int>("CoursesCourseID")
@@ -118,33 +120,6 @@ namespace EFCoreTutorial.Migrations
                     b.ToTable("Enrollments");
                 });
 
-            modelBuilder.Entity("EFCoreTutorial.Models.Instructor", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<string>("FirstMidName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("FirstName");
-
-                    b.Property<DateTime>("HireDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Instructor", (string)null);
-                });
-
             modelBuilder.Entity("EFCoreTutorial.Models.OfficeAssignment", b =>
                 {
                     b.Property<int>("InstructorID")
@@ -159,16 +134,14 @@ namespace EFCoreTutorial.Migrations
                     b.ToTable("OfficeAssignments");
                 });
 
-            modelBuilder.Entity("EFCoreTutorial.Models.Student", b =>
+            modelBuilder.Entity("EFCoreTutorial.Models.Person", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasDefaultValueSql("NEXT VALUE FOR [PersonSequence]");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<DateTime>("EnrollmentDate")
-                        .HasColumnType("datetime2");
+                    SqlServerPropertyBuilderExtensions.UseSequence(b.Property<int>("ID"));
 
                     b.Property<string>("FirstMidName")
                         .IsRequired()
@@ -182,6 +155,28 @@ namespace EFCoreTutorial.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("ID");
+
+                    b.ToTable((string)null);
+
+                    b.UseTpcMappingStrategy();
+                });
+
+            modelBuilder.Entity("EFCoreTutorial.Models.Instructor", b =>
+                {
+                    b.HasBaseType("EFCoreTutorial.Models.Person");
+
+                    b.Property<DateTime>("HireDate")
+                        .HasColumnType("datetime2");
+
+                    b.ToTable("Instructor", (string)null);
+                });
+
+            modelBuilder.Entity("EFCoreTutorial.Models.Student", b =>
+                {
+                    b.HasBaseType("EFCoreTutorial.Models.Person");
+
+                    b.Property<DateTime>("EnrollmentDate")
+                        .HasColumnType("datetime2");
 
                     b.ToTable("Student", (string)null);
                 });

@@ -30,7 +30,8 @@ namespace EFCoreTutorial.Pages.Instructors
                 return NotFound();
             }
 
-            Instructor = await _context.Instructors
+
+			Instructor = await _context.People.OfType<Instructor>()
                 .Include(i => i.OfficeAssignment)
                 .Include(i => i.Courses)
                 .AsNoTracking()
@@ -51,8 +52,8 @@ namespace EFCoreTutorial.Pages.Instructors
                 return NotFound();
             }
 
-            var instructorToUpdate = await _context.Instructors
-                .Include(i => i.OfficeAssignment)
+            var instructorToUpdate = await _context.People.OfType<Instructor>()
+				.Include(i => i.OfficeAssignment)
                 .Include(i => i.Courses)
                 .FirstOrDefaultAsync(s => s.ID == id);
 

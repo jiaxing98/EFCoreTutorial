@@ -23,12 +23,12 @@ namespace EFCoreTutorial.Pages.Instructors
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Instructors == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var instructor = await _context.Instructors.FirstOrDefaultAsync(m => m.ID == id);
+            var instructor = await _context.People.OfType<Instructor>().FirstOrDefaultAsync(m => m.ID == id);
             if (instructor == null)
             {
                 return NotFound();

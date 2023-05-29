@@ -38,7 +38,7 @@ namespace EFCoreTutorial.Pages.Students
 				"student",   // Prefix for form value.
 				s => s.FirstMidName, s => s.LastName, s => s.EnrollmentDate))
 			{
-				_context.Students.Add(emptyStudent);
+				_context.People.Add(emptyStudent);
 				await _context.SaveChangesAsync();
 				return RedirectToPage("./Index");
 			}

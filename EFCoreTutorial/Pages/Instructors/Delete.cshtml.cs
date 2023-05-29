@@ -24,12 +24,13 @@ namespace EFCoreTutorial.Pages.Instructors
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Instructors == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var instructor = await _context.Instructors.FirstOrDefaultAsync(m => m.ID == id);
+			var instructor = await _context.People.OfType<Instructor>()
+                .FirstOrDefaultAsync(m => m.ID == id);
 
             if (instructor == null)
             {
@@ -44,14 +45,14 @@ namespace EFCoreTutorial.Pages.Instructors
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null || _context.Instructors == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            Instructor instructor = await _context.Instructors
+			var instructor = await _context.People.OfType<Instructor>()
                 .Include(i => i.Courses)
-                .SingleAsync(i => i.ID == id);
+				.SingleAsync(i => i.ID == id);                
 
             if (instructor == null)
             {
@@ -63,7 +64,7 @@ namespace EFCoreTutorial.Pages.Instructors
                 .ToListAsync();
             departments.ForEach(d => d.InstructorID = null);
 
-            _context.Instructors.Remove(instructor);
+            _context.People.Remove(instructor);
 
             await _context.SaveChangesAsync();
 

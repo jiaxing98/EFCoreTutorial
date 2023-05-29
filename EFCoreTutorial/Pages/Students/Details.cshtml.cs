@@ -23,18 +23,19 @@ namespace EFCoreTutorial.Pages.Students
 
 		public async Task<IActionResult> OnGetAsync(int? id)
 		{
-			if (id == null || _context.Students == null)
+			if (id == null)
 			{
 				return NotFound();
 			}
 
-			Student = await _context.Students
+			Student = await _context.People.OfType<Student>()
 				.Include(s => s.Enrollments)
 				.ThenInclude(e => e.Course)
 				.AsNoTracking()
 				.FirstOrDefaultAsync(m => m.ID == id);
 
-			var student = await _context.Students.FirstOrDefaultAsync(m => m.ID == id);
+			var student = await _context.People.OfType<Student>()
+				.FirstOrDefaultAsync(m => m.ID == id);
 			if (student == null)
 			{
 				return NotFound();

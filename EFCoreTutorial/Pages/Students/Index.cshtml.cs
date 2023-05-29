@@ -45,7 +45,7 @@ namespace EFCoreTutorial.Pages.Students
 
 			CurrentFilter = searchString;
 
-			IQueryable<Student> studentsIQ = from s in _context.Students
+			IQueryable<Student> studentsIQ = from s in _context.People.OfType<Student>()
                                              select s;
 
 			if (!string.IsNullOrEmpty(searchString))

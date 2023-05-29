@@ -71,7 +71,8 @@ namespace EFCoreTutorial.Pages.Instructors
 								i => i.FirstMidName, i => i.LastName,
 								i => i.HireDate, i => i.OfficeAssignment))
 				{
-					_context.Instructors.Add(newInstructor);
+
+					_context.People.Add(newInstructor);
 					await _context.SaveChangesAsync();
 					return RedirectToPage("./Index");
 				}

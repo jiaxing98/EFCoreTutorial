@@ -6,17 +6,19 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace EFCoreTutorial.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class TCPInheritance : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateSequence(
+                name: "PersonSequence");
+
             migrationBuilder.CreateTable(
                 name: "Instructor",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ID = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR [PersonSequence]"),
                     LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     HireDate = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -30,8 +32,7 @@ namespace EFCoreTutorial.Migrations
                 name: "Student",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ID = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR [PersonSequence]"),
                     LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     EnrollmentDate = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -50,7 +51,8 @@ namespace EFCoreTutorial.Migrations
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Budget = table.Column<decimal>(type: "money", nullable: false),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    InstructorID = table.Column<int>(type: "int", nullable: true)
+                    InstructorID = table.Column<int>(type: "int", nullable: true),
+                    ConcurrencyToken = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -200,6 +202,9 @@ namespace EFCoreTutorial.Migrations
 
             migrationBuilder.DropTable(
                 name: "Instructor");
+
+            migrationBuilder.DropSequence(
+                name: "PersonSequence");
         }
     }
 }

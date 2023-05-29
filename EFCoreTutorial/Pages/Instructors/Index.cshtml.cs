@@ -27,7 +27,7 @@ namespace EFCoreTutorial.Pages.Instructors
 		public async Task OnGetAsync(int? id, int? courseID)
         {
 			InstructorData = new InstructorIndexData();
-			InstructorData.Instructors = await _context.Instructors
+			InstructorData.Instructors = await _context.People.OfType<Instructor>()
 				.Include(i => i.OfficeAssignment)
 				.Include(i => i.Courses)
 					.ThenInclude(c => c.Department)

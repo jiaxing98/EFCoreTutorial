@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using EFCoreTutorial.Data;
 using EFCoreTutorial.Models.SchoolViewModels;
+using EFCoreTutorial.Models;
 
 namespace EFCoreTutorial.Pages
 {
@@ -19,7 +20,7 @@ namespace EFCoreTutorial.Pages
         public async Task OnGetAsync()
         {
             IQueryable<EnrollmentDateGroup> data =
-                from student in _context.Students
+                from student in _context.People.OfType<Student>()
                 group student by student.EnrollmentDate into dateGroup
                 select new EnrollmentDateGroup()
                 {

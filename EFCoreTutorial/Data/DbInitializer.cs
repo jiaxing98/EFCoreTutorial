@@ -6,7 +6,7 @@ namespace EFCoreTutorial.Data
     {
         public static void Initialize(SchoolContext context)
         {
-            if (context.Students.Any()) return;
+            if (context.People.OfType<Student>().Any()) return;
 
             var alexander = new Student
             {

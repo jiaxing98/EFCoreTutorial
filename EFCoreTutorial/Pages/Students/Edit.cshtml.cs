@@ -30,7 +30,7 @@ namespace EFCoreTutorial.Pages.Students
 				return NotFound();
 			}
 
-			Student = await _context.Students.FindAsync(id);
+			Student = await _context.People.OfType<Student>().SingleOrDefaultAsync(x => x.ID == id);
 
 			if (Student == null)
 			{
@@ -43,7 +43,7 @@ namespace EFCoreTutorial.Pages.Students
 		// For more details, see https://aka.ms/RazorPagesCRUD.
 		public async Task<IActionResult> OnPostAsync(int id)
 		{
-			var studentToUpdate = await _context.Students.FindAsync(id);
+			var studentToUpdate = await _context.People.OfType<Student>().SingleOrDefaultAsync(x => x.ID == id);
 
 			if (studentToUpdate == null)
 			{
@@ -64,7 +64,7 @@ namespace EFCoreTutorial.Pages.Students
 
 		private bool StudentExists(int id)
 		{
-			return _context.Students.Any(e => e.ID == id);
+			return _context.People.OfType<Student>().Any(e => e.ID == id);
 		}
 	}
 }

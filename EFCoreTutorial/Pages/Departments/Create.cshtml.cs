@@ -10,37 +10,38 @@ using EFCoreTutorial.Models;
 
 namespace EFCoreTutorial.Pages.Departments
 {
-    public class CreateModel : PageModel
-    {
-        private readonly EFCoreTutorial.Data.SchoolContext _context;
+	public class CreateModel : PageModel
+	{
+		private readonly SchoolContext _context;
 
-        public CreateModel(EFCoreTutorial.Data.SchoolContext context)
-        {
-            _context = context;
-        }
+		public CreateModel(SchoolContext context)
+		{
+			_context = context;
+		}
 
-        public IActionResult OnGet()
-        {
-        ViewData["InstructorID"] = new SelectList(_context.Instructors, "ID", "FirstMidName");
-            return Page();
-        }
+		public IActionResult OnGet()
+		{
+			var instructors = _context.People.OfType<Instructor>().ToList();
+			ViewData["InstructorID"] = new SelectList(instructors, "ID", "FirstMidName");
+			return Page();
+		}
 
-        [BindProperty]
-        public Department Department { get; set; }
-        
+		[BindProperty]
+		public Department Department { get; set; }
 
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
-        {
-          if (!ModelState.IsValid)
-            {
-                return Page();
-            }
 
-            _context.Departments.Add(Department);
-            await _context.SaveChangesAsync();
+		// To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
+		public async Task<IActionResult> OnPostAsync()
+		{
+			if (!ModelState.IsValid)
+			{
+				return Page();
+			}
 
-            return RedirectToPage("./Index");
-        }
-    }
+			_context.Departments.Add(Department);
+			await _context.SaveChangesAsync();
+
+			return RedirectToPage("./Index");
+		}
+	}
 }

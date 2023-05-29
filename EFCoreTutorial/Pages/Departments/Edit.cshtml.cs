@@ -38,8 +38,8 @@ namespace EFCoreTutorial.Pages.Departments
 			}
 
 			// Use strongly typed data rather than ViewData.
-			InstructorNameSL = new SelectList(_context.Instructors,
-				"ID", "FirstMidName");
+			var instructors = _context.People.OfType<Instructor>().ToList();
+			InstructorNameSL = new SelectList(instructors, "ID", "FirstMidName");
 
 			return Page();
 		}
@@ -99,7 +99,7 @@ namespace EFCoreTutorial.Pages.Departments
 				}
 			}
 
-			InstructorNameSL = new SelectList(_context.Instructors,
+			InstructorNameSL = new SelectList(_context.People.OfType<Instructor>(),
 				"ID", "FullName", departmentToUpdate.InstructorID);
 
 			return Page();
@@ -111,7 +111,7 @@ namespace EFCoreTutorial.Pages.Departments
 			// and overides the Department instance values when displaying Page().
 			ModelState.AddModelError(string.Empty,
 				"Unable to save. The department was deleted by another user.");
-			InstructorNameSL = new SelectList(_context.Instructors, "ID", "FullName", Department.InstructorID);
+			InstructorNameSL = new SelectList(_context.People.OfType<Instructor>(), "ID", "FullName", Department.InstructorID);
 			return Page();
 		}
 
@@ -136,8 +136,8 @@ namespace EFCoreTutorial.Pages.Departments
 			}
 			if (dbValues.InstructorID != clientValues.InstructorID)
 			{
-				Instructor dbInstructor = await _context.Instructors
-				   .FindAsync(dbValues.InstructorID);
+				Instructor dbInstructor = await _context.People.OfType<Instructor>()
+					.SingleOrDefaultAsync(x => x.ID == dbValues.InstructorID);
 				ModelState.AddModelError("Department.InstructorID",
 					$"Current value: {dbInstructor?.FullName}");
 			}
