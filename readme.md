@@ -28,6 +28,6 @@
 2. Optimistic concurrency
 3. Conflict detection in EF Core
 
-### [*Inheritance - TPH Strategy*](https://learn.microsoft.com/en-us/aspnet/core/data/ef-mvc/inheritance?view=aspnetcore-7.0)
-
-### [*Inheritance - TPC Strategy*](https://www.learnentityframeworkcore.com/inheritance/table-per-concrete#:~:text=In%20EF%20Core%207.0%2C%20the,inherited%20from%20its%20base%20class.)
+### [*PART 9: Advanced Topics*](https://learn.microsoft.com/en-us/aspnet/core/data/ef-mvc/advanced?view=aspnetcore-7.0)
+1. Raw SQL Queries
+2. Dynamic LINQ
