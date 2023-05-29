@@ -12,4 +12,7 @@
 1. Add sorting
 2. Add filtering
 3. Add paging
-4. Grouping
+4. Grouping  
+
+## *Razor Pages with EF Core migrations in ASP.NET Core*  
+### https://learn.microsoft.com/en-us/aspnet/core/data/ef-rp/migrations?view=aspnetcore-7.0&tabs=visual-studio  
