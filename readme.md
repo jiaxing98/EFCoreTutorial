@@ -20,3 +20,5 @@
 1. Eager Loading
 2. Explicit Loading
 3. Lazy Loading
+
+### [*PART 7: Razor Pages with EF Core in ASP.NET Core - Update Related Data*](https://learn.microsoft.com/en-us/aspnet/core/data/ef-rp/update-related-data?view=aspnetcore-7.0)

@@ -28,15 +28,16 @@ namespace EFCoreTutorial.Pages.Courses
                 return NotFound();
             }
 
-            var course = await _context.Courses.FirstOrDefaultAsync(m => m.CourseID == id);
-            if (course == null)
+			Course = await _context.Courses
+					.AsNoTracking()
+					.Include(c => c.Department)
+					.FirstOrDefaultAsync(m => m.CourseID == id);
+            
+            if (Course == null)
             {
-                return NotFound();
+				return NotFound();
             }
-            else 
-            {
-                Course = course;
-            }
+            
             return Page();
         }
     }

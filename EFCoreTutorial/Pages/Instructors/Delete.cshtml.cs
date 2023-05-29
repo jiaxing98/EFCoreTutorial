@@ -12,9 +12,9 @@ namespace EFCoreTutorial.Pages.Instructors
 {
     public class DeleteModel : PageModel
     {
-        private readonly EFCoreTutorial.Data.SchoolContext _context;
+        private readonly SchoolContext _context;
 
-        public DeleteModel(EFCoreTutorial.Data.SchoolContext context)
+        public DeleteModel(SchoolContext context)
         {
             _context = context;
         }
@@ -48,14 +48,24 @@ namespace EFCoreTutorial.Pages.Instructors
             {
                 return NotFound();
             }
-            var instructor = await _context.Instructors.FindAsync(id);
 
-            if (instructor != null)
+            Instructor instructor = await _context.Instructors
+                .Include(i => i.Courses)
+                .SingleAsync(i => i.ID == id);
+
+            if (instructor == null)
             {
-                Instructor = instructor;
-                _context.Instructors.Remove(Instructor);
-                await _context.SaveChangesAsync();
+                return RedirectToPage("./Index");
             }
+
+            var departments = await _context.Departments
+                .Where(d => d.InstructorID == id)
+                .ToListAsync();
+            departments.ForEach(d => d.InstructorID = null);
+
+            _context.Instructors.Remove(instructor);
+
+            await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
         }
