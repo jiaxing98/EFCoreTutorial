@@ -15,3 +15,8 @@
 
 ### [*PART 5: Razor Pages with EF Core in ASP.NET Core - Data Model*](https://learn.microsoft.com/en-us/aspnet/core/data/ef-rp/complex-data-model?view=aspnetcore-7.0&tabs=visual-studio)
 1. Fluent API
+
+### [*PART 6: Razor Pages with EF Core in ASP.NET Core - Read Related Data*](https://learn.microsoft.com/en-us/aspnet/core/data/ef-rp/read-related-data?view=aspnetcore-7.0&tabs=visual-studio)
+1. Eager Loading
+2. Explicit Loading
+3. Lazy Loading
